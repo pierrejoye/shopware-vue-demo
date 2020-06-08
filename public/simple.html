@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Clash</title>
+    <!-- the star of the show - the Vue library! -->
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        // Need the DOM to do things (later on, called "mounted")
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#sg1',
+                // define data - initial display text
+                data: {
+                    helloMessage: "My first VueJs App",
+                    counter: 0
+                },
+                methods: {
+                    increment: function() {
+                        this.counter++;
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <!-- text -->
+    <div id="sg1">
+        <button @click="increment();">Increment</button>
+        <p>{{ helloMessage }}
+            <bold v-if="counter > 0"> - {{ counter}}</bold>
+        </p>
+    </div>
+</body>
+
+</html>
