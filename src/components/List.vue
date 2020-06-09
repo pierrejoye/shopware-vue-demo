@@ -31,15 +31,23 @@
               </v-card-actions>
             </v-card>
           </v-col>
-          <v-col v-for="card in cards" :key="card.title" cols="12" xs="12" md="6" lg="6" xl="6">
+          <v-col
+            v-for="product in productsList"
+            :key="product.id"
+            cols="12"
+            xs="12"
+            md="6"
+            lg="6"
+            xl="6"
+          >
             <v-card>
               <v-img
-                :src="card.src"
+                :src="getImage(product)"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
               >
-                <v-card-title v-text="card.title"></v-card-title>
+                <v-card-title v-text="getTitle(product)"></v-card-title>
               </v-img>
 
               <v-card-actions>
@@ -70,7 +78,8 @@
             lg="6"
             xl="6"
           >
-            <p>{{ product.name }} - {{ getPrice(product) }}</p> - <p>{{ getImage(product) }}</p>
+            <p>{{ product.name }} - {{ getPrice(product) }}</p>-
+            <p>{{ getImage(product) }}</p>
             <span v-html="product.description "></span>
           </v-col>
         </v-row>
@@ -84,44 +93,7 @@ import axios from "axios";
 
 export default Vue.extend({
   data: () => ({
-    productsList: null,
-    cards: [
-      {
-        title: "Favorite road trips",
-        src: "/assets/images/road.jpg",
-        flex: 6
-      },
-      {
-        title: "Sunshine rocks",
-        src: "/assets/images/sunshine.jpg",
-        flex: 6
-      },
-      {
-        title: "Favorite road trips 2",
-        src: "/assets/images/road.jpg",
-        flex: 6
-      },
-      {
-        title: "Some Random image",
-        src: "/assets/images/300.jpg",
-        flex: 6
-      },
-      {
-        title: "Some other random images",
-        src: "/assets/images/300_1.jpg",
-        flex: 6
-      },
-      {
-        title: "Yet another one",
-        src: "/assets/images/300_2.jpg",
-        flex: 6
-      },
-      {
-        title: "And the last one ;)",
-        src: "/assets/images/300_3.jpg",
-        flex: 6
-      }
-    ]
+    productsList: null
   }),
   mounted() {
     const headers = {
@@ -156,7 +128,16 @@ export default Vue.extend({
       return product.cover.media.url;
     },
     getPrice: function(product) {
-        return product.price[0].net;
+      const price = product.price[0].net;
+      return price.toFixed(2) // always two decimal digits
+      .replace('.', ',') // replace decimal point character with ,
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' €'
+    },
+    getTitle: function(product) {
+      return this.truncate(product.name, 30) + " " + this.getPrice(product);
+    },
+    truncate: function(text, max) {
+        return text.length > max ? text.slice(0, max) + '...' : text;
     }
   }
 });
