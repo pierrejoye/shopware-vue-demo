@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Clash</title>
+    <title>Simple Vue App</title>
     <!-- the star of the show - the Vue library! -->
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script>
@@ -13,7 +13,16 @@
                 // define data - initial display text
                 data: {
                     helloMessage: "My first VueJs App",
-                    counter: 0
+                    counter: 0,
+                    items: [{
+                        message: "John Doe"
+                    }, {
+                        message: "Supachai"
+                    }, {
+                        message: "Frank Smith"
+                    }, {
+                        message: "Trung Minh"
+                    }, ]
                 },
                 methods: {
                     increment: function() {
@@ -30,9 +39,17 @@
     <div id="sg1">
         <button @click="increment();">Increment</button>
         <p>{{ helloMessage }}
-            <bold v-if="counter > 0"> - {{ counter}}</bold>
+            <bold v-if="counter > 0"> - {{ counter }} {{ items[0].message }}</bold>
         </p>
+        <div>
+            <ul id="myList">
+                <li v-for="item in items" :key="item.message">
+                    {{ item.message }}
+                </li>
+            </ul>
+        </div>
     </div>
+
 </body>
 
 </html>
