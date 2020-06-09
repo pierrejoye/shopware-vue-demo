@@ -24,6 +24,11 @@
                         message: "Trung Minh"
                     }, ]
                 },
+                computed: {
+                    countItem: function() {
+                        return this.items.length;
+                    }
+                },
                 methods: {
                     increment: function() {
                         this.counter++;
@@ -42,6 +47,7 @@
             <bold v-if="counter > 0"> - {{ counter }} {{ items[0].message }}</bold>
         </p>
         <div>
+            <bold> list of {{ countItem }}</bold>
             <ul id="myList">
                 <li v-for="item in items" :key="item.message">
                     {{ item.message }}
