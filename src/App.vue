@@ -7,12 +7,20 @@
     >
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="ShopWare"
           class="shrink mr-2"
           contain
           src="../public/assets/images/shopware_logo_blue.svg"
           transition="scale-transition"
-          width="200"
+          max-width="150"
+        />
+        <v-img
+          alt="DemoStore"
+          class="shrink mr-2"
+          contain
+          src="../public/assets/images/demostore-logo.png"
+          transition="scale-transition"
+          max-width="200"
         />
       </div>
     </v-app-bar>
