@@ -60,6 +60,20 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col
+            v-for="product in productsList"
+            :key="product.id"
+            cols="12"
+            xs="12"
+            md="6"
+            lg="6"
+            xl="6"
+          >
+            <p>{{ product.name }} - {{ getPrice(product) }}</p> - <p>{{ getImage(product) }}</p>
+            <span v-html="product.description "></span>
+          </v-col>
+        </v-row>
       </v-container>
     </v-card>
   </v-app>
@@ -129,13 +143,21 @@ export default Vue.extend({
     axios
       .post(ApiUrl, data, { headers: headers })
       .then(res => {
-        this.productsList = res.data;
+        this.productsList = res.data.data;
         console.log(this.productsList);
       })
       .catch(error => {
         console.log(error);
         // Manage errors if found any
       });
+  },
+  methods: {
+    getImage: function(product) {
+      return product.cover.media.url;
+    },
+    getPrice: function(product) {
+        return product.price[0].net;
+    }
   }
 });
 </script>
