@@ -1,10 +1,9 @@
 <template>
   <v-app id="inspire">
     <v-card class="mx-auto" max-width="1200">
-
       <v-container>
         <v-row dense>
-          <v-col  cols="12">
+          <v-col cols="12">
             <v-card>
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
@@ -31,7 +30,7 @@
                 </v-btn>
               </v-card-actions>
             </v-card>
-          </v-col>        
+          </v-col>
           <v-col v-for="card in cards" :key="card.title" cols="12" xs="12" md="6" lg="6" xl="6">
             <v-card>
               <v-img
@@ -67,8 +66,11 @@
 </template>
 <script>
 import Vue from "vue";
+import axios from "axios";
+
 export default Vue.extend({
   data: () => ({
+    productsList: null,
     cards: [
       {
         title: "Favorite road trips",
@@ -104,8 +106,36 @@ export default Vue.extend({
         title: "And the last one ;)",
         src: "/assets/images/300_3.jpg",
         flex: 6
-      },
+      }
     ]
-  })
+  }),
+  mounted() {
+    const headers = {
+      "Content-Type": "application/json",
+      "sw-access-key": "SWSCVHRITKJEU0ZJUXDXCFZBTW"
+    };
+    const data = {
+      filter: [
+        {
+          type: "equals",
+          field: "categories.id",
+          value: "8d7e63f5793f494d818ea433c7d2dfba"
+        }
+      ]
+    };
+    const ApiUrl =
+      "https://pierre.demo.enterprise.shopware.com/sales-channel-api/v1/product";
+
+    axios
+      .post(ApiUrl, data, { headers: headers })
+      .then(res => {
+        this.productsList = res.data;
+        console.log(this.productsList);
+      })
+      .catch(error => {
+        console.log(error);
+        // Manage errors if found any
+      });
+  }
 });
 </script>
