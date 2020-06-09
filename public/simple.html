@@ -46,6 +46,7 @@
         <p>{{ helloMessage }}
             <bold v-if="counter > 0"> - {{ counter }} {{ items[0].message }}</bold>
         </p>
+        <input type="text" v-model="helloMessage">
         <div>
             <bold> list of {{ countItem }}</bold>
             <ul id="myList">
