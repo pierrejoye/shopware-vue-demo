@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .5s;
+    }
+    
+    .fade-enter,
+    .fade-leave-to
+    /* .fade-leave-active below version 2.1.8 */
+    
+    {
+        opacity: 0;
+    }
+</style>
 
 <head>
     <title>Simple Vue App</title>
@@ -22,7 +36,8 @@
                         message: "Frank Smith"
                     }, {
                         message: "Trung Minh"
-                    }, ]
+                    }, ],
+                    showList: true
                 },
                 computed: {
                     countItem: function() {
@@ -48,12 +63,17 @@
         </p>
         <input type="text" v-model="helloMessage">
         <div>
-            <bold> list of {{ countItem }}</bold>
-            <ul id="myList">
-                <li v-for="item in items" :key="item.message">
-                    {{ item.message }}
-                </li>
-            </ul>
+            <button v-on:click="showList = !showList">Toggle list Visibility</button>
+            <transition name="fade">
+                <div v-if="showList">
+                    <bold> list of {{ countItem }}</bold>
+                    <ul id="myList">
+                        <li v-for="item in items" :key="item.message">
+                            {{ item.message }}
+                        </li>
+                    </ul>
+                </div>
+            </transition>
         </div>
     </div>
 
